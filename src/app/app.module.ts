@@ -10,7 +10,11 @@ import { MessagesComponent } from './messages/messages.component';
 import {MessageService} from "./service/message.service";
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { HeraSearchComponent } from './hera-search/hera-search.component';
+import { HeroSearchComponent } from './hero-search/hero-search.component';
+import {HttpClientModule} from "@angular/common/http";
+import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
+import {HeroesInMemoryDataService} from "./service/heroes-in-memory-data.service";
+import {HeroesService} from "./service/heroes.service";
 
 @NgModule({
   declarations: [
@@ -19,14 +23,22 @@ import { HeraSearchComponent } from './hera-search/hera-search.component';
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    HeraSearchComponent
+    HeroSearchComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+
+    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // and returns simulated server responses.
+    // Remove it when a real server is ready to receive requests.
+    HttpClientInMemoryWebApiModule.forRoot(
+      HeroesInMemoryDataService, { dataEncapsulation: false }
+    )
   ],
-  providers: [HeroesStubService, MessageService],
+  providers: [HeroesStubService, MessageService, HeroesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

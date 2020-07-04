@@ -3,6 +3,7 @@ import {Hero} from "../model/hero";
 import {HeroesStubService} from "../service/heroes-stub.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Location} from "@angular/common";
+import {HeroesService} from "../service/heroes.service";
 
 @Component({
   selector: 'app-hero-detail',
@@ -14,12 +15,11 @@ export class HeroDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private location: Location,
-              private heroesService: HeroesStubService) {
+              private heroesService: HeroesService) {
   }
 
   ngOnInit(): void {
-    // The route.snapshot is a static image of the route information
-    // shortly after the component was created.
+    // The route.snapshot is a static image of the route information shortly after the component was created.
     // The paramMap is a dictionary of route parameter values extracted from the URL.
     // const id = +this.route.snapshot.paramMap.get('id');
     this.route.params.subscribe((params: Params) =>
@@ -29,5 +29,10 @@ export class HeroDetailComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  update() {
+    this.heroesService.updateHero(this.hero)
+      .subscribe(() => this.goBack());
   }
 }

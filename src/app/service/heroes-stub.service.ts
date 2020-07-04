@@ -1,15 +1,25 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Hero} from "../model/hero";
 import {HEROES} from "../model/mock-heroes";
 import {Observable, of} from "rxjs";
 import {MessageService} from "./message.service";
 
 @Injectable()
-export class HeroesStubService {
+export class HeroesStubService implements OnInit {
   private topHeroIDs: Map<number, number>;
 
   constructor(private messageService: MessageService) {
     this.topHeroIDs = new Map<number, number>();
+  }
+
+  ngOnInit(): void {
+    this.messageService.isReseted().subscribe(isClear =>
+    {
+      if (isClear && this.topHeroIDs.size > 0) {
+        console.log('onClear event clear top heroes');
+        this.topHeroIDs.clear();
+      }
+    });
   }
 
   public getHeroesSync(): Hero [] {
@@ -42,7 +52,7 @@ export class HeroesStubService {
     }
     let counter = 0;
     console.log('Before sort: ', this.topHeroIDs);
-    const sortedByTop: Map<any, any> = this.sortMapByValue(this.topHeroIDs);
+    const sortedByTop: Map<any, any> =  this.sortMapByValue(this.topHeroIDs);
     console.log('After sort: ', sortedByTop);
     let topHeroes: Hero[] = [];
     for (const id of sortedByTop.keys()) {
@@ -52,6 +62,7 @@ export class HeroesStubService {
       topHeroes.push(HEROES.find(hero => hero.id === id));
       ++counter;
     }
+    // if there are less than 4 visited heroes - pick first ones
     for (let i = 0; visitedHeroes !== 4; i++) {
       let hero: Hero = HEROES[i];
       if (!topHeroes.includes(hero)) {
