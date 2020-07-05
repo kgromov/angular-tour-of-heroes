@@ -15,6 +15,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
 import {HeroesInMemoryDataService} from "./service/heroes-in-memory-data.service";
 import {HeroesService} from "./service/heroes.service";
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {HeroesService} from "./service/heroes.service";
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    HeroSearchComponent
+    HeroSearchComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

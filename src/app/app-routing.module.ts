@@ -3,6 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {HeroesComponent} from "./heroes/heroes.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {HeroDetailComponent} from "./hero-detail/hero-detail.component";
+import {ErrorComponent} from "./error/error.component";
 
 /*
  * To generate from CLI:
@@ -16,7 +17,9 @@ const routes: Routes = [
   {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'detail/:id', component: HeroDetailComponent},
-  {path: 'heroes', component: HeroesComponent}
+  {path: 'heroes', component: HeroesComponent},
+  {path: 'error', component: ErrorComponent},
+  {path: '**', redirectTo: '/error'}
 ];
 
 @NgModule({
